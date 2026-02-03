@@ -36,20 +36,20 @@ class ListActivity : ComponentActivity() {
 
 @Composable
 fun ListScreen() {
-    Column( modifier = Modifier.fillMaxWidth().background(Color.Red).padding( 16.dp)) {
+    Column( modifier = Modifier.fillMaxWidth().background(Color.Red).padding( 16.dp).padding(top = 64.dp)) {
         Column(modifier = Modifier.fillMaxWidth().background(Color.Gray).padding(16.dp)) {
             LazyColumn(modifier = Modifier.fillMaxWidth().background(Color.White).padding(16.dp)) {
                 items(allKantoPokemon) { item ->
                     Column {
                         Text(
-                            text = "#${item.name}.${item.number}",
+                            text = "#${item.number} ${item.name}",
                             modifier = Modifier.padding(16.dp)
                         )
 
                         Divider(
                             modifier = Modifier.fillMaxWidth(),
                             thickness = 3.dp,
-                            color = Color.LightGray
+                            color = Color.Black
                         )
                     }
                 }
