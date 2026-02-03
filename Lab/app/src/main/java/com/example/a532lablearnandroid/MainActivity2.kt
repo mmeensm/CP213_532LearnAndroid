@@ -109,6 +109,7 @@ class MainActivity2 : ComponentActivity() {
                                     .clickable {
                                         str = str - 1
                                     }
+                                    .align(Alignment.CenterHorizontally)
                             )
                         }
 
