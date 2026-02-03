@@ -41,11 +41,14 @@ class MainActivity2 : ComponentActivity() {
                             text = "hp",
                             modifier = Modifier
                                 .align(Alignment.CenterStart)
-                                .fillMaxWidth(0.75f)
-                                .background(Color.Red)
+                                .fillMaxWidth(0.32f)
+                                .background(Color.Green)
                                 .padding(8.dp)
                         )
                     }
+
+                    // image
+                    // status
 
                 }
             }
