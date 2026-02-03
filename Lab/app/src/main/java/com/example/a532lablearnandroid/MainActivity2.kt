@@ -12,39 +12,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.a532lablearnandroid.ui.theme._532LabLearnAndroidTheme
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 class MainActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            _532LabLearnAndroidTheme {  }LabLearnAndoridTheme {
+            _532LabLearnAndroidTheme {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Gray)
                         .padding(32.dp)
                 ) {
-                    // hp
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(32.dp)
-                            .background(color = Color.White)
+                            .background(Color.White)
                     ) {
                         Text(
                             text = "hp",
                             modifier = Modifier
-                                .align(alignment = Alignment.CenterStart)
-                                .fillMaxWidth(fraction = 0.75f)
-                                .background(color = Color.Red)
+                                .align(Alignment.CenterStart)
+                                .fillMaxWidth(0.75f)
+                                .background(Color.Red)
                                 .padding(8.dp)
-
                         )
                     }
 
-                    // image
-                    // status
                 }
             }
         }
