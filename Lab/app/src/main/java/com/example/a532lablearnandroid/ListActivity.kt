@@ -27,6 +27,8 @@ import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import android.util.Log
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Divider
 import androidx.compose.ui.platform.LocalContext
 
 class ListActivity : ComponentActivity() {
@@ -50,9 +52,16 @@ fun ListScreen() {
                         modifier = Modifier.padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center) {
-                        Text(text= item.number.toString())
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text(text= item.name)
+                        Text(
+                            text = "#${item.name}.${item.number}",
+                            modifier = Modifier.padding(16.dp)
+                        )
+
+                        Divider(
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 3.dp,
+                            color = Color.LightGray
+                        )
 
                         val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.number}.png"
 
