@@ -37,6 +37,11 @@ android {
     buildFeatures {
         compose = true
     }
+    dependencies {
+        // Coil สำหรับ Compose
+        implementation("io.coil-kt:coil-compose:2.5.0")
+    }
+
 }
 
 dependencies {
