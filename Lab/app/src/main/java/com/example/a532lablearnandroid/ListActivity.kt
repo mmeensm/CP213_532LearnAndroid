@@ -48,19 +48,20 @@ fun ListScreen() {
         Column(modifier = Modifier.fillMaxSize().background(Color.Gray).padding(16.dp)) {
             LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White).padding(16.dp)) {
                 items(allKantoPokemon) { item ->
-                    Row(
-                        modifier = Modifier.padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center) {
-                        Text(
-                            text = "#${item.name}.${item.number}",
-                            modifier = Modifier.padding(16.dp)
-                        )
-
+                    Column {
                         Divider(
                             modifier = Modifier.fillMaxWidth(),
                             thickness = 3.dp,
-                            color = Color.LightGray
+                            color = Color.Gray
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.padding(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center) {
+                        Text(
+                            text = "#${item.number} ${item.name}",
+                            modifier = Modifier.padding(16.dp)
                         )
 
                         val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.number}.png"
