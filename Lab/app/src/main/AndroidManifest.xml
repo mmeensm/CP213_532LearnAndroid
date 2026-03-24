@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
@@ -49,6 +51,12 @@
             android:name=".GalleryActivity"
             android:exported="false"
             android:label="Gallery Access"
+            android:theme="@style/Theme._532LabLearnAndroid">
+        </activity>
+        <activity
+            android:name=".SensorLocationActivity"
+            android:exported="false"
+            android:label="Sensor and Location MVVM"
             android:theme="@style/Theme._532LabLearnAndroid">
         </activity>
     </application>

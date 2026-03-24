@@ -40,6 +40,12 @@ android {
     dependencies {
         // Coil สำหรับ Compose
         implementation("io.coil-kt:coil-compose:2.5.0")
+        
+        // play services for Location
+        implementation("com.google.android.gms:play-services-location:21.3.0")
+        
+        // viewmodel compose
+        implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
     }
 
 }
