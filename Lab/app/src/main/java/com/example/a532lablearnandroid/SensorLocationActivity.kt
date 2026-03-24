@@ -44,6 +44,7 @@ class SensorLocationActivity : ComponentActivity() {
 fun SensorLocationScreen(viewModel: SensorLocationViewModel, modifier: Modifier = Modifier) {
     val sensorData by viewModel.sensorData.collectAsState()
     val locationData by viewModel.locationData.collectAsState()
+    val isTracking by viewModel.isTrackingLocation.collectAsState()
 
     val context = LocalContext.current
 
@@ -78,30 +79,47 @@ fun SensorLocationScreen(viewModel: SensorLocationViewModel, modifier: Modifier 
             Text("No Location Data")
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "Status: ${if (isTracking) "Tracking Update Active" else "Stopped"}")
+
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
-            val hasFineLocation = ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-            val hasCoarseLocation = ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-            if (hasFineLocation || hasCoarseLocation) {
-                viewModel.startLocationTracking()
-            } else {
-                permissionLauncher.launch(
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Button(
+                onClick = {
+                    val hasFineLocation = ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                    val hasCoarseLocation = ContextCompat.checkSelfPermission(
+                        context,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                )
+                    ) == PackageManager.PERMISSION_GRANTED
+
+                    if (hasFineLocation || hasCoarseLocation) {
+                        viewModel.startLocationTracking()
+                    } else {
+                        permissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                        )
+                    }
+                },
+                enabled = !isTracking
+            ) {
+                Text("Start GPS")
             }
-        }) {
-            Text("Start GPS Tracking")
+
+            Button(
+                onClick = {
+                    viewModel.stopLocationTracking()
+                },
+                enabled = isTracking
+            ) {
+                Text("Stop GPS")
+            }
         }
     }
 }

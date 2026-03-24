@@ -6,6 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Looper
+import android.util.Log
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -20,6 +21,7 @@ class SensorTracker(private val context: Context) {
     
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     private var isLocationClientActive = false
+    private var locationCallback: LocationCallback? = null
 
     // Accelerometer listener
     fun startAccelerometerProcess(sensorDataState: MutableStateFlow<FloatArray>) {
@@ -38,7 +40,10 @@ class SensorTracker(private val context: Context) {
 
     // Location listener
     fun startLocationProcess(locationDataState: MutableStateFlow<Pair<Double, Double>?>) {
-        if (isLocationClientActive) return // Prevent multiple location requests
+        if (isLocationClientActive) {
+            Log.d("SensorTracker", "Location client is already active.")
+            return
+        }
 
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
             .setWaitForAccurateLocation(false)
@@ -46,19 +51,31 @@ class SensorTracker(private val context: Context) {
             .setMaxUpdateDelayMillis(5000)
             .build()
         
-        val locationCallback = object : LocationCallback() {
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 locationResult.lastLocation?.let { location ->
+                    Log.d("SensorTracker", "Location received: ${location.latitude}, ${location.longitude}")
                     locationDataState.value = Pair(location.latitude, location.longitude)
                 }
             }
         }
         
         try {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback!!, Looper.getMainLooper())
             isLocationClientActive = true
+            Log.d("SensorTracker", "Location updates requested.")
         } catch (e: SecurityException) {
             e.printStackTrace()
+            Log.e("SensorTracker", "Location permission missing.")
+        }
+    }
+
+    fun stopLocationProcess() {
+        if (isLocationClientActive && locationCallback != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback!!)
+            isLocationClientActive = false
+            locationCallback = null
+            Log.d("SensorTracker", "Location updates stopped.")
         }
     }
 }

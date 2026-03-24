@@ -16,6 +16,9 @@ class SensorLocationViewModel(application: Application) : AndroidViewModel(appli
     private val _locationData = MutableStateFlow<Pair<Double, Double>?>(null)
     val locationData: StateFlow<Pair<Double, Double>?> = _locationData.asStateFlow()
 
+    private val _isTrackingLocation = MutableStateFlow(false)
+    val isTrackingLocation: StateFlow<Boolean> = _isTrackingLocation.asStateFlow()
+
     init {
         // start reading sensor immediately as it doesn't require runtime permission in foreground
         sensorTracker.startAccelerometerProcess(_sensorData)
@@ -23,5 +26,11 @@ class SensorLocationViewModel(application: Application) : AndroidViewModel(appli
 
     fun startLocationTracking() {
         sensorTracker.startLocationProcess(_locationData)
+        _isTrackingLocation.value = true
+    }
+
+    fun stopLocationTracking() {
+        sensorTracker.stopLocationProcess()
+        _isTrackingLocation.value = false
     }
 }
